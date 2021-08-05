@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  db:
+    image: mongo:latest
+    container_name: db
+    hostname: db
+    env_file: ./.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
+    volumes:
+      - db:/data/db
+  backend:
+    build: ./
+    container_name: "backend"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on: 
+      - "mongodb"
+    # deploy:
+    #   replicas: 1
+    #   restart_policy:
+    #     condition: on-failure
+
+volumes: 
+  db:
