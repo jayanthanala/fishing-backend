@@ -24,7 +24,7 @@ exports.register = async (req, res) => {
       password: hashpass 
     })
 
-    const token = jwt.sign(user.email, process.env.JWT_SECRET)
+    const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET)
     res.status(200).json({
       token,
       userDetails: {
@@ -42,15 +42,13 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body
     if (!email || !password) throw new Error('Required data not provided')
-    const user = await User.findOne({email: email})
-
+    const user = await User.findOne({_id: req.user._id})
     if (!user) { throw new Error('Email is not registered!') }
-
     const hashpass = await bcrypt.compare(password, user.password)
 
     if (!hashpass) throw new Error('Password is incorrect!')
 
-    const token = jwt.sign(user.email, process.env.JWT_SECRET)
+    const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET)
     res.status(200).json({
       token,
       userDetails: {

@@ -5,10 +5,10 @@ module.exports = async (req,res,next)=>{
     try{
         if (!req.headers.authorization) throw new Error('No Auth Header Found')
         const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token,process.env.SECRET)
-        const user = await User.findOne({email:decoded.email,"tokens.token":token}).select("-password")
+        const decoded = jwt.verify(token,process.env.JWT_SECRET)
+        console.log(decoded)
+        const user = await User.findOne({_id:decoded._id}).select("-password")
         if(!user) throw new Error("Token not valid, No account found!")
-        if(!user.emailVerified) throw new Error('Email ID not verified')
         req.user = user;
         req.token = token;
         next();
