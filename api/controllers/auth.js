@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body
     if (!email || !password) throw new Error('Required data not provided')
-    const user = await User.findOne({_id: req.user._id})
+    const user = await User.findOne({email})
     if (!user) { throw new Error('Email is not registered!') }
     const hashpass = await bcrypt.compare(password, user.password)
 

@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 // Mongo
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
 
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }, (err) => {
   if (err) {
     process.exit(2);
   }
