@@ -42,6 +42,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, us
 
 // ROUTES
 app.use('/',require('./api/routes/auth'))
+app.use('/dashboard',require('./api/routes/dashboard'))
 app.use('*', async(req,res) => {
   res.send("Server Working");
 })

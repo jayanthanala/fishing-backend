@@ -1,49 +1,5 @@
 const mongoose = require('mongoose')
 
-const tripSchema = new mongoose.Schema({
-  user:{
-    type:mongoose.Schema.Types.ObjectId, 
-    ref:'User', 
-    required:true
-  },
-  location:{
-    type:String,
-    required:true
-  },
-  date:{
-    type:Date,
-    required:true
-  },
-  time:{
-    type:String,
-    required:true
-  },
-  totalHours:{
-    type:Number,
-    required:true
-  },
-  tripCost:{
-    type:Number,
-    required:true,
-    min:1
-  },
-  amtrecovered:{
-    type:Number,
-    required:true,
-    min:1
-  },
-  fishingVessel:{
-    type:Boolean,
-    required:true,
-    default:false
-  },
-  findings:[{
-    type:mongoose.Schema.Types.ObjectId, 
-    ref:'Findings', 
-    required:true
-  }]
-});
-
 const fishSchema = new mongoose.Schema({
   fishName:{
     type:String,
@@ -62,7 +18,7 @@ const fishSchema = new mongoose.Schema({
     required:true
   },
   fishWeightKg:{
-    type:String,
+    type:Number,
     required:true
   },
   quantity:{
@@ -74,11 +30,11 @@ const fishSchema = new mongoose.Schema({
     required:true
   },
   weatherCondition:{
-    type:Number,
+    type:String,
     required:true
   },
   windCondition:{
-    type:Number,
+    type:String,
     required:true
   },
   tideCondition:{
@@ -106,10 +62,55 @@ const fishSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-  personalNote:{
+  note:{
     type:String
   }
 })
+
+const tripSchema = new mongoose.Schema({
+  user:{
+    type:mongoose.Schema.Types.ObjectId, 
+    ref:'Users', 
+    required:true
+  },
+  location:{
+    type:String,
+    required:true
+  },
+  date:{
+    type:String,
+    required:true
+  },
+  time:{
+    type:String,
+    required:true
+  },
+  totalHours:{
+    type:Number,
+    required:true
+  },
+  tripCost:{
+    type:Number,
+    required:true,
+    min:1
+  },
+  amtrecovered:{
+    type:Number,
+    required:true,
+    min:1
+  },
+  fishingVessel:{
+    type:Boolean,
+    required:true,
+    default:false
+  },
+  findings:[{
+    type: fishSchema,
+    default: []
+  }]
+});
+
+
 
 const Trip = mongoose.model('Trip', tripSchema)
 const Findings = mongoose.model('Findings',fishSchema)

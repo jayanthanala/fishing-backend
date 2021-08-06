@@ -8,7 +8,7 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body
     if (!name || !email || !password) throw new Error('Required data not provided')
-    const searchedUser = await User.findOne({email: email}).select("-password")
+    const searchedUser = await User.findOne({email}).select("-password")
 
     if (searchedUser) { throw new Error(`Email is already registered!`) }
 
