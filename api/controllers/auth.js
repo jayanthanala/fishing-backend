@@ -64,3 +64,7 @@ exports.login = async (req, res) => {
     })
   }
 }
+
+exports.regConfig = async(req,res) => {
+
+}

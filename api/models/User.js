@@ -16,15 +16,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 8
   },
-  tokens:[
-    {
-      token:{
-          type:String,
-          required:true,
-          trim:true
-         }
-    }
-],
+  locations:[{
+    type:String
+  }],
+  fishNames:[{
+    type:String
+  }]
 })
 
 module.exports = mongoose.model('Users', userSchema)
