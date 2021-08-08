@@ -8,6 +8,7 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body
     if (!name || !email || !password) throw new Error('Required data not provided')
+    if (password.length<8) throw new Error('Password should be minimum of 8 letters')
     const searchedUser = await User.findOne({email}).select("-password")
 
     if (searchedUser) { throw new Error(`Email is already registered!`) }
@@ -42,6 +43,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body
     if (!email || !password) throw new Error('Required data not provided')
+    if (password.length<8) throw new Error('Wrong Password')
     const user = await User.findOne({email})
     if (!user) { throw new Error('Email is not registered!') }
     const hashpass = await bcrypt.compare(password, user.password)
