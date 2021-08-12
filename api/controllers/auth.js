@@ -35,7 +35,7 @@ exports.register = async (req, res) => {
     })
   } catch (e) {
     console.log(e)
-    res.status(e.status || 500).json(e.message);
+    res.status(e.status || 500).json('message':e.message);
   }
 }
 
